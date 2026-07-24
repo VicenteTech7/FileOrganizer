@@ -5,15 +5,26 @@ def analizar_carpeta(ruta):
 
     archivos = 0
     carpetas = 0
+    extensiones = {}
 
     for elemento in carpeta.iterdir():
+
         if elemento.is_file():
             archivos += 1
+            
+            extension = elemento.suffix.lower()
+
+            if extension == "":
+                extension = "(sin extensión)"
+
+            extensiones[extension] = extensiones.get(extension, 0) +1    
+
         elif elemento.is_dir():
             carpetas += 1
-
+            
     return {
         "ruta": carpeta.resolve(),
         "archivos": archivos,
-        "carpetas": carpetas
+        "carpetas": carpetas,
+        "extensiones": extensiones
     }
